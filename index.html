@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя визитка</title>
 
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: #eef2ff;
+      color: #222;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px;
+      box-sizing: border-box;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .avatar {
+      font-size: 64px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 20px;
+      background: #4338ca;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+    }
+
+    .button:hover {
+      background: #312e81;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="avatar" aria-hidden="true">👋</div>
+
+    <h1>Привет, я Саша!</h1>
+
+    <p>Я начинаю изучать создание сайтов. Это мой первый проект.</p>
+
+    <h2>Мои интересы</h2>
+    <p>Музыка, путешествия и программирование.</p>
+
+    <a class="button" href="https://github.com/USERNAME">
+      Мой GitHub
+    </a>
+  </main>
+</body>
+</html>
