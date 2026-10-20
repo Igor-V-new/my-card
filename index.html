@@ -192,7 +192,7 @@
       background: var(--limeade);
     }
 
-    /* Контакты */
+    /* Кнопки */
     .actions {
       display: grid;
       gap: 12px;
@@ -231,13 +231,22 @@
       color: var(--mine-shaft);
     }
 
+    .button-share {
+      border: 2px solid var(--limeade);
+    }
+
+    .button:disabled {
+      cursor: wait;
+      opacity: 0.7;
+    }
+
     @media (hover: hover) {
-      .button:hover {
+      .button:not(:disabled):hover {
         transform: translateY(-2px);
         background: var(--border);
       }
 
-      .button-primary:hover {
+      .button-primary:not(:disabled):hover {
         background: #3bc20a;
       }
 
@@ -247,9 +256,50 @@
     }
 
     a:focus-visible,
-    button:focus-visible {
+    button:focus-visible,
+    input:focus-visible {
       outline: 3px solid var(--limeade);
       outline-offset: 4px;
+    }
+
+    /* Сообщения о копировании ссылки */
+    .share-status {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .share-status:empty {
+      display: none;
+    }
+
+    .manual-share {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      text-align: left;
+    }
+
+    .manual-share label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .share-url {
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
     }
 
     /* QR-код */
@@ -407,6 +457,38 @@
       >
         Сохранить контакт
       </button>
+
+      <button
+        id="share-button"
+        class="button button-share"
+        type="button"
+        aria-describedby="share-status"
+        hidden
+      >
+        Поделиться визиткой
+      </button>
+
+      <p
+        id="share-status"
+        class="share-status"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+
+      <div id="manual-share" class="manual-share" hidden>
+        <label for="share-url">
+          Скопируй ссылку вручную и отправь её:
+        </label>
+
+        <input
+          id="share-url"
+          class="share-url"
+          type="url"
+          readonly
+          spellcheck="false"
+        >
+      </div>
     </div>
 
     <section
@@ -536,8 +618,6 @@
 
     photo.src = PROFILE.photo;
 
-    // Проверка на случай, если изображение уже загрузилось
-    // или завершилось ошибкой до запуска скрипта.
     if (photo.complete && photo.naturalWidth === 0) {
       showPhotoPlaceholder();
     }
@@ -576,7 +656,7 @@
     try {
       savedTheme = localStorage.getItem("card-theme");
     } catch (error) {
-      // Если хранение настроек запрещено,
+      // Если сохранение запрещено,
       // используем системную тему.
     }
 
@@ -610,7 +690,7 @@
       try {
         localStorage.setItem("card-theme", newTheme);
       } catch (error) {
-        // Переключение работает и без сохранения настройки.
+        // Переключение работает без сохранения настройки.
       }
     });
 
@@ -627,8 +707,8 @@
       document.getElementById("qr-error").hidden = false;
     });
 
-    // Внешнему сервису передаётся ссылка Telegram.
-    // Номер телефона и почта ему не передаются.
+    // Сервис получает ссылку Telegram,
+    // но не номер телефона и не почту.
     qrImage.referrerPolicy = "no-referrer";
     qrImage.src =
       "https://api.qrserver.com/v1/create-qr-code/" +
@@ -683,6 +763,104 @@
       setTimeout(() => {
         URL.revokeObjectURL(fileUrl);
       }, 60000);
+    });
+
+    // ========================================
+    // ПОДЕЛИТЬСЯ ВИЗИТКОЙ
+    // ========================================
+
+    const shareButton = document.getElementById("share-button");
+    const shareStatus = document.getElementById("share-status");
+    const manualShare = document.getElementById("manual-share");
+    const shareUrlInput = document.getElementById("share-url");
+
+    shareButton.hidden = false;
+
+    // Используем адрес открытого сайта.
+    // Убираем параметры и якорь, сохраняя путь репозитория.
+    function getCardUrl() {
+      const url = new URL(window.location.href);
+      url.search = "";
+      url.hash = "";
+      return url.href;
+    }
+
+    // Выделяем ссылку при нажатии для ручного копирования.
+    shareUrlInput.addEventListener("click", () => {
+      shareUrlInput.select();
+      shareUrlInput.setSelectionRange(
+        0,
+        shareUrlInput.value.length
+      );
+    });
+
+    async function copyOrShowLink(url) {
+      try {
+        if (!window.isSecureContext || !navigator.clipboard) {
+          throw new Error("Автоматическое копирование недоступно");
+        }
+
+        await navigator.clipboard.writeText(url);
+
+        shareStatus.textContent =
+          "Ссылка скопирована! Теперь её можно вставить в сообщение.";
+      } catch (error) {
+        shareUrlInput.value = url;
+        manualShare.hidden = false;
+
+        shareStatus.textContent =
+          "Браузер не разрешил автоматическое копирование.";
+
+        shareUrlInput.focus();
+        shareUrlInput.select();
+        shareUrlInput.setSelectionRange(0, url.length);
+      }
+    }
+
+    shareButton.addEventListener("click", async () => {
+      shareStatus.textContent = "";
+      manualShare.hidden = true;
+
+      // Локальный файл нельзя отправлять как публичную ссылку.
+      if (
+        window.location.protocol !== "https:" &&
+        window.location.protocol !== "http:"
+      ) {
+        shareStatus.textContent =
+          "Открой опубликованный сайт на GitHub Pages, чтобы поделиться ссылкой.";
+        return;
+      }
+
+      const url = getCardUrl();
+
+      const shareData = {
+        title: PROFILE.name + " — контакты",
+        text: "Моя электронная визитка",
+        url: url
+      };
+
+      shareButton.disabled = true;
+
+      try {
+        if (typeof navigator.share === "function") {
+          try {
+            // Открываем системное меню отправки.
+            await navigator.share(shareData);
+            return;
+          } catch (error) {
+            // Если пользователь закрыл меню, ничего не копируем.
+            if (error.name === "AbortError") {
+              return;
+            }
+
+            // При другой ошибке пробуем скопировать ссылку.
+          }
+        }
+
+        await copyOrShowLink(url);
+      } finally {
+        shareButton.disabled = false;
+      }
     });
   </script>
 </body>
