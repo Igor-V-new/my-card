@@ -5,73 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
 
-  <title>Игорь — сайт-визитка</title>
+  <title>Игорь — контакты</title>
 
   <style>
-    /* Светлая тема */
+    /* Фирменные цвета и светлая тема */
     :root {
       color-scheme: light;
-      --background: #eef2ff;
-      --card: #ffffff;
-      --text: #182033;
-      --muted: #526078;
-      --accent: #4338ca;
-      --accent-hover: #312e81;
-      --button-text: #ffffff;
-      --surface: #f1f5f9;
-      --border: #d5dce8;
-      --shadow: 0 16px 45px rgba(20, 30, 60, 0.12);
+
+      --limeade: #30AD00;
+      --mine-shaft: #262626;
+      --quarter-white: #F6F2DE;
+
+      --page-background: #F6F2DE;
+      --card-background: rgba(246, 242, 222, 0.95);
+      --text: #262626;
+      --muted: #555545;
+      --border: rgba(38, 38, 38, 0.2);
+      --surface: rgba(38, 38, 38, 0.06);
+
+      --map-opacity: 0.36;
+      --background-overlay:
+        linear-gradient(
+          135deg,
+          rgba(48, 173, 0, 0.26) 0%,
+          rgba(246, 242, 222, 0.68) 48%,
+          rgba(38, 38, 38, 0.34) 100%
+        );
+
+      --shadow: 0 24px 70px rgba(38, 38, 38, 0.2);
     }
 
     /* Тёмная тема */
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --background: #101522;
-      --card: #1c2536;
-      --text: #f1f5ff;
-      --muted: #bac5d8;
-      --accent: #a5b4fc;
-      --accent-hover: #c7d2fe;
-      --button-text: #101522;
-      --surface: #283348;
-      --border: #46546e;
-      --shadow: 0 16px 45px rgba(0, 0, 0, 0.3);
+
+      --page-background: #262626;
+      --card-background: rgba(38, 38, 38, 0.95);
+      --text: #F6F2DE;
+      --muted: #ccc9b8;
+      --border: rgba(246, 242, 222, 0.22);
+      --surface: rgba(246, 242, 222, 0.07);
+
+      --map-opacity: 0.22;
+      --background-overlay:
+        linear-gradient(
+          135deg,
+          rgba(48, 173, 0, 0.25) 0%,
+          rgba(38, 38, 38, 0.65) 52%,
+          rgba(38, 38, 38, 0.9) 100%
+        );
+
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 24px;
-      display: grid;
-      place-items: center;
+      min-height: 100svh;
+      padding: 32px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+
       font-family: Arial, sans-serif;
-      background: var(--background);
       color: var(--text);
+      background: var(--page-background);
+      isolation: isolate;
+    }
+
+    /* Неподвижный фон */
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background: var(--page-background);
+    }
+
+    .background-map {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: var(--map-opacity);
+      filter: grayscale(65%) blur(2px);
+      transform: scale(1.03);
+    }
+
+    .background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--background-overlay);
     }
 
     .card {
       width: 100%;
-      max-width: 480px;
+      max-width: 460px;
+      margin-top: auto;
       padding: 28px;
-      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-top: 5px solid var(--limeade);
+      border-radius: 26px;
+      background: var(--card-background);
       box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       text-align: center;
     }
 
     .toolbar {
       display: flex;
       justify-content: flex-end;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     button,
-    .button {
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
       font: inherit;
       cursor: pointer;
     }
@@ -80,16 +144,17 @@
       padding: 10px 14px;
       border: 1px solid var(--border);
       border-radius: 12px;
-      background: var(--surface);
       color: var(--text);
+      background: var(--surface);
+      font-size: 14px;
     }
 
     .avatar,
     .avatar-placeholder {
-      width: 150px;
-      height: 150px;
+      width: 152px;
+      height: 152px;
       margin: 0 auto 20px;
-      border: 4px solid var(--border);
+      border: 4px solid var(--limeade);
       border-radius: 50%;
     }
 
@@ -103,76 +168,91 @@
       display: grid;
       place-items: center;
       background: var(--surface);
-      font-size: 64px;
-    }
-
-    [hidden] {
-      display: none !important;
+      font-size: 60px;
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: 32px;
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.2;
       overflow-wrap: anywhere;
     }
 
-    h2 {
-      margin-top: 0;
-      font-size: 21px;
-    }
-
-    p {
-      line-height: 1.6;
-    }
-
-    .description,
-    .hint {
-      color: var(--muted);
+    .accent-line {
+      width: 48px;
+      height: 4px;
+      margin: 18px auto 24px;
+      border-radius: 10px;
+      background: var(--limeade);
     }
 
     .actions {
       display: grid;
       gap: 12px;
-      margin: 24px 0;
     }
 
     .button {
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
-      padding: 14px 18px;
-      border: 1px solid transparent;
-      border-radius: 12px;
-      background: var(--accent);
-      color: var(--button-text);
-      text-decoration: none;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
+      min-height: 50px;
+      padding: 14px 16px;
 
-    .button:hover {
-      background: var(--accent-hover);
-    }
+      border: 1px solid var(--border);
+      border-radius: 14px;
 
-    .button-secondary {
       background: var(--surface);
       color: var(--text);
-      border-color: var(--border);
+
+      font: inherit;
+      font-weight: bold;
+      line-height: 1.4;
+      text-align: center;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+
+      transition:
+        transform 0.15s ease,
+        background-color 0.15s ease;
     }
 
-    .button-secondary:hover,
-    .theme-button:hover {
-      background: var(--background);
+    .button-primary {
+      border-color: var(--limeade);
+      background: var(--limeade);
+      color: var(--mine-shaft);
+    }
+
+    @media (hover: hover) {
+      .button:hover {
+        transform: translateY(-2px);
+        background: var(--border);
+      }
+
+      .button-primary:hover {
+        background: #3bc20a;
+      }
+
+      .theme-button:hover {
+        background: var(--border);
+      }
     }
 
     a:focus-visible,
     button:focus-visible {
-      outline: 3px solid var(--accent);
+      outline: 3px solid var(--limeade);
       outline-offset: 4px;
     }
 
     .qr-section {
+      margin-top: 26px;
       padding-top: 24px;
       border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 20px;
     }
 
     .qr-link {
@@ -185,29 +265,70 @@
 
     .qr-image {
       display: block;
-      width: 200px;
+      width: 184px;
       max-width: 100%;
       height: auto;
     }
 
+    .telegram-name {
+      margin: 12px 0 0;
+      font-weight: bold;
+    }
+
     .hint {
-      margin-bottom: 0;
-      font-size: 14px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .map-credit {
+      margin: 0 0 auto;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card-background);
+      color: var(--text);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .map-credit a {
+      color: inherit;
+      text-underline-offset: 3px;
     }
 
     @media (max-width: 380px) {
       body {
-        padding: 12px;
+        padding: 16px 12px;
       }
 
       .card {
-        padding: 20px;
+        padding: 22px 18px;
+      }
+
+      h1 {
+        font-size: 29px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button {
+        transition: none;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="background" aria-hidden="true">
+    <img
+      id="background-map"
+      class="background-map"
+      alt=""
+    >
+  </div>
+
   <main class="card">
     <div class="toolbar">
       <button
@@ -229,29 +350,30 @@
       aria-hidden="true"
       hidden
     >
-      👋
+      👤
     </div>
 
-    <h1 id="name"></h1>
-    <p id="description" class="description"></p>
+    <h1 id="name">Игорь</h1>
+
+    <div class="accent-line" aria-hidden="true"></div>
 
     <div class="actions">
-      <a id="phone-link" class="button button-secondary"></a>
-
       <a
         id="telegram-link"
-        class="button"
+        class="button button-primary"
         target="_blank"
         rel="noopener noreferrer"
       >
         Написать в Telegram
       </a>
 
-      <a id="email-link" class="button button-secondary"></a>
+      <a id="phone-link" class="button"></a>
+
+      <a id="email-link" class="button"></a>
 
       <button
         id="save-contact"
-        class="button button-secondary"
+        class="button"
         type="button"
       >
         Сохранить контакт
@@ -259,23 +381,25 @@
     </div>
 
     <section class="qr-section" aria-labelledby="qr-title">
-      <h2 id="qr-title">Мой Telegram</h2>
+      <h2 id="qr-title">Будем на связи</h2>
 
       <a
         id="qr-link"
         class="qr-link"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Открыть Telegram Игоря"
+        aria-label="Открыть Telegram"
       >
         <img
           id="qr-image"
           class="qr-image"
-          width="200"
-          height="200"
+          width="184"
+          height="184"
           alt="QR-код для перехода в Telegram"
         >
       </a>
+
+      <p id="telegram-name" class="telegram-name"></p>
 
       <p id="qr-error" class="hint" hidden>
         QR-код не загрузился. Используй кнопку Telegram выше.
@@ -283,74 +407,76 @@
 
       <p class="hint">
         Отсканируй QR-код камерой телефона
-        или нажми на него, чтобы открыть Telegram.
+        или нажми на него.
       </p>
 
       <p class="hint">
-        Для добавления номера и почты в телефонную книгу
-        нажми «Сохранить контакт», открой файл
-        и подтверди добавление.
+        «Сохранить контакт» скачает карточку с номером и почтой.
+        Открой файл и подтверди добавление в контакты.
       </p>
     </section>
 
     <noscript>
-      <p>Для работы этой страницы нужно включить JavaScript.</p>
+      <p>Для работы кнопок и загрузки данных включи JavaScript.</p>
     </noscript>
   </main>
 
+  <footer id="map-credit" class="map-credit" hidden>
+    Карта Москвы:
+    <a
+      href="https://2gis.ru/moscow"
+      target="_blank"
+      rel="noopener noreferrer"
+    >2ГИС</a>
+  </footer>
+
   <script>
-    // =====================================
+    // ========================================
     // ТВОИ ДАННЫЕ
-    // Замени +79852521041 и ig.volkov@2gis.ru своими данными.
-    // =====================================
+    // Перенеси номер и почту из прежнего файла.
+    // ========================================
 
     const PROFILE = {
-      name: "Игорь Волков",
-      description: "Привет! Это мой сайт-визитка. Буду рад общению.",
-      phone: "+79852521041",
-      email: "ig.volkov@2gis.ru",
+      name: "Игорь",
+      phone: "ВСТАВЬ_СВОЙ_НОМЕР",
+      email: "ВСТАВЬ_СВОЮ_ПОЧТУ",
       telegram: "Igor_V25",
-      photo: "photo.jpg"
+      photo: "photo.jpg",
+      map: "moscow-map.jpg"
     };
 
-    // =====================================
-    // ЗАПОЛНЕНИЕ СТРАНИЦЫ
-    // =====================================
+    // ========================================
+    // ДАННЫЕ НА СТРАНИЦЕ
+    // ========================================
 
     const telegramUsername = PROFILE.telegram.trim().replace(/^@/, "");
     const telegramUrl = "https://t.me/" + telegramUsername;
     const phoneForCall = PROFILE.phone.replace(/[^\d+]/g, "");
 
-    document.title = PROFILE.name + " — сайт-визитка";
-
+    document.title = PROFILE.name + " — контакты";
     document.getElementById("name").textContent = PROFILE.name;
 
-    document.getElementById("description").textContent =
-      PROFILE.description;
-
     const phoneLink = document.getElementById("phone-link");
-    phoneLink.textContent = "Позвонить: " + PROFILE.phone;
+    phoneLink.textContent = PROFILE.phone;
     phoneLink.href = "tel:" + phoneForCall;
 
     const emailLink = document.getElementById("email-link");
-    emailLink.textContent = "Почта: " + PROFILE.email;
+    emailLink.textContent = PROFILE.email;
     emailLink.href = "mailto:" + PROFILE.email.trim();
 
     document.getElementById("telegram-link").href = telegramUrl;
 
+    document.getElementById("telegram-name").textContent =
+      "@" + telegramUsername;
+
     const qrLink = document.getElementById("qr-link");
     qrLink.href = telegramUrl;
-    qrLink.setAttribute(
-      "aria-label",
-      "Открыть Telegram: @" + telegramUsername
-    );
 
-    // =====================================
+    // ========================================
     // ФОТОГРАФИЯ
-    // =====================================
+    // ========================================
 
     const photo = document.getElementById("photo");
-
     photo.alt = "Фото: " + PROFILE.name;
 
     photo.addEventListener("error", () => {
@@ -360,9 +486,27 @@
 
     photo.src = PROFILE.photo;
 
-    // =====================================
+    // ========================================
+    // КАРТА НА ФОНЕ
+    // ========================================
+
+    const mapImage = document.getElementById("background-map");
+    const mapCredit = document.getElementById("map-credit");
+
+    mapImage.addEventListener("load", () => {
+      mapCredit.hidden = false;
+    });
+
+    mapImage.addEventListener("error", () => {
+      mapImage.hidden = true;
+      mapCredit.hidden = true;
+    });
+
+    mapImage.src = PROFILE.map;
+
+    // ========================================
     // QR-КОД TELEGRAM
-    // =====================================
+    // ========================================
 
     const qrImage = document.getElementById("qr-image");
 
@@ -371,16 +515,17 @@
       document.getElementById("qr-error").hidden = false;
     });
 
-    // Внешнему сервису передаётся ссылка Telegram.
+    // Внешнему сервису передаётся ссылка Telegram,
+    // но не номер телефона и не почта.
     qrImage.referrerPolicy = "no-referrer";
     qrImage.src =
       "https://api.qrserver.com/v1/create-qr-code/" +
       "?size=240x240&margin=12&data=" +
       encodeURIComponent(telegramUrl);
 
-    // =====================================
-    // ПЕРЕКЛЮЧЕНИЕ ТЕМЫ
-    // =====================================
+    // ========================================
+    // СВЕТЛАЯ И ТЁМНАЯ ТЕМА
+    // ========================================
 
     const themeButton = document.getElementById("theme-button");
 
@@ -393,7 +538,7 @@
     try {
       savedTheme = localStorage.getItem("card-theme");
     } catch (error) {
-      // Если хранение настроек запрещено, используем системную тему.
+      // Если сохранение запрещено, используем системную тему.
     }
 
     const initialTheme =
@@ -426,13 +571,13 @@
       try {
         localStorage.setItem("card-theme", newTheme);
       } catch (error) {
-        // Переключение работает и без сохранения настройки.
+        // Тема продолжит работать без сохранения настройки.
       }
     });
 
-    // =====================================
+    // ========================================
     // СОХРАНЕНИЕ КОНТАКТА
-    // =====================================
+    // ========================================
 
     function escapeVCard(value) {
       return String(value)
@@ -461,14 +606,14 @@
       });
 
       const fileUrl = URL.createObjectURL(file);
-      const downloadLink = document.createElement("a");
+      const link = document.createElement("a");
 
-      downloadLink.href = fileUrl;
-      downloadLink.download = "igor-contact.vcf";
+      link.href = fileUrl;
+      link.download = "igor-contact.vcf";
 
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      downloadLink.remove();
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
       setTimeout(() => {
         URL.revokeObjectURL(fileUrl);
