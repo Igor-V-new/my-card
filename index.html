@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
 
-  <title>Игорь Волков — контакты</title>
+  <title>Игорь — контакты</title>
 
   <style>
     /* Светлая тема */
@@ -262,16 +262,24 @@
       outline-offset: 4px;
     }
 
-    /* Сообщения о копировании ссылки */
-    .share-status {
-      margin: 0;
+    /* Сообщения */
+    .status,
+    .hint {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.6;
     }
 
-    .share-status:empty {
+    .status {
+      margin: 0;
+    }
+
+    .status:empty {
       display: none;
+    }
+
+    .hint {
+      margin: 12px 0 0;
     }
 
     .manual-share {
@@ -302,7 +310,7 @@
       font-size: 14px;
     }
 
-    /* QR-код */
+    /* QR-коды */
     .qr-section {
       margin-top: 26px;
       padding-top: 24px;
@@ -334,11 +342,31 @@
       font-weight: bold;
     }
 
-    .hint {
-      margin: 12px 0 0;
-      color: var(--muted);
-      font-size: 13px;
+    .site-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--text);
+      font-size: 14px;
       line-height: 1.6;
+      text-underline-offset: 3px;
+      overflow-wrap: anywhere;
+    }
+
+    .qr-download {
+      margin-top: 16px;
+    }
+
+    .download-status {
+      margin-top: 12px;
+    }
+
+    .fallback-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      text-underline-offset: 3px;
     }
 
     /* Источник карты */
@@ -418,7 +446,7 @@
       👤
     </div>
 
-    <h1 id="name">Игорь Волков</h1>
+    <h1 id="name">Игорь</h1>
 
     <div class="accent-line" aria-hidden="true"></div>
 
@@ -470,7 +498,7 @@
 
       <p
         id="share-status"
-        class="share-status"
+        class="status"
         role="status"
         aria-live="polite"
         aria-atomic="true"
@@ -489,18 +517,105 @@
           spellcheck="false"
         >
       </div>
+
+      <button
+        id="toggle-card-qr"
+        class="button"
+        type="button"
+        aria-expanded="false"
+        aria-controls="card-qr-section"
+        hidden
+      >
+        QR-код визитки
+      </button>
     </div>
 
+    <!-- Новый QR-код: открывает сайт-визитку -->
     <section
-      id="qr-section"
+      id="card-qr-section"
       class="qr-section"
-      aria-labelledby="qr-title"
+      aria-labelledby="card-qr-title"
       hidden
     >
-      <h2 id="qr-title">Будем на связи</h2>
+      <h2 id="card-qr-title">Моя электронная визитка</h2>
 
       <a
-        id="qr-link"
+        id="card-qr-link"
+        class="qr-link"
+        href="https://igor-v-new.github.io/my-card/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Открыть сайт-визитку Игоря"
+      >
+        <img
+          id="card-qr-image"
+          class="qr-image"
+          width="184"
+          height="184"
+          alt="QR-код со ссылкой на сайт-визитку Игоря"
+        >
+      </a>
+
+      <p id="card-qr-error" class="hint" hidden>
+        QR-код не загрузился. Ссылка на сайт доступна ниже.
+      </p>
+
+      <div>
+        <a
+          id="card-site-link"
+          class="site-link"
+          href="https://igor-v-new.github.io/my-card/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          igor-v-new.github.io/my-card/
+        </a>
+      </div>
+
+      <p class="hint">
+        Этот QR-код открывает сайт со всеми моими контактами.
+        Сохрани его для презентации или печати.
+      </p>
+
+      <button
+        id="download-card-qr"
+        class="button button-primary qr-download"
+        type="button"
+      >
+        Скачать QR-код
+      </button>
+
+      <p
+        id="download-status"
+        class="status download-status"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+
+      <a
+        id="download-fallback"
+        class="fallback-link"
+        target="_blank"
+        rel="noopener noreferrer"
+        referrerpolicy="no-referrer"
+        hidden
+      >
+        Открыть картинку для сохранения
+      </a>
+    </section>
+
+    <!-- Прежний QR-код: открывает Telegram -->
+    <section
+      id="telegram-qr-section"
+      class="qr-section"
+      aria-labelledby="telegram-qr-title"
+      hidden
+    >
+      <h2 id="telegram-qr-title">Будем на связи</h2>
+
+      <a
+        id="telegram-qr-link"
         class="qr-link"
         href="https://t.me/Igor_V25"
         target="_blank"
@@ -508,7 +623,7 @@
         aria-label="Открыть Telegram @Igor_V25"
       >
         <img
-          id="qr-image"
+          id="telegram-qr-image"
           class="qr-image"
           width="184"
           height="184"
@@ -520,7 +635,7 @@
         @Igor_V25
       </p>
 
-      <p id="qr-error" class="hint" hidden>
+      <p id="telegram-qr-error" class="hint" hidden>
         QR-код не загрузился.
         Используй кнопку Telegram выше.
       </p>
@@ -555,21 +670,22 @@
     // ========================================
 
     const PROFILE = {
-      name: "Игорь Волков",
+      name: "Игорь",
       phone: "+79852521041",
       email: "ig.volkov@2gis.ru",
       telegram: "Igor_V25",
       photo: "photo.jpg",
-      map: "moscow-map.jpg"
+      map: "moscow-map.jpg",
+      website: "https://igor-v-new.github.io/my-card/"
     };
-
-    // ========================================
-    // ЗАПОЛНЕНИЕ СТРАНИЦЫ
-    // ========================================
 
     const telegramUsername = PROFILE.telegram.trim().replace(/^@/, "");
     const telegramUrl = "https://t.me/" + telegramUsername;
     const phoneForCall = PROFILE.phone.replace(/[^\d+]/g, "");
+
+    // ========================================
+    // ЗАПОЛНЕНИЕ СТРАНИЦЫ
+    // ========================================
 
     document.title = PROFILE.name + " — контакты";
     document.getElementById("name").textContent = PROFILE.name;
@@ -587,12 +703,21 @@
     document.getElementById("telegram-name").textContent =
       "@" + telegramUsername;
 
-    const qrLink = document.getElementById("qr-link");
-    qrLink.href = telegramUrl;
-    qrLink.setAttribute(
+    const telegramQrLink =
+      document.getElementById("telegram-qr-link");
+
+    telegramQrLink.href = telegramUrl;
+    telegramQrLink.setAttribute(
       "aria-label",
       "Открыть Telegram @" + telegramUsername
     );
+
+    document.getElementById("card-qr-link").href = PROFILE.website;
+
+    const cardSiteLink = document.getElementById("card-site-link");
+    cardSiteLink.href = PROFILE.website;
+    cardSiteLink.textContent =
+      PROFILE.website.replace(/^https?:\/\//, "");
 
     // ========================================
     // ФОТОГРАФИЯ
@@ -656,8 +781,7 @@
     try {
       savedTheme = localStorage.getItem("card-theme");
     } catch (error) {
-      // Если сохранение запрещено,
-      // используем системную тему.
+      // Используем системную тему.
     }
 
     const initialTheme =
@@ -695,25 +819,162 @@
     });
 
     // ========================================
+    // ОБЩАЯ ФУНКЦИЯ ДЛЯ QR-КОДОВ
+    // ========================================
+
+    function createQrUrl(value, size = 300) {
+      const url = new URL(
+        "https://api.qrserver.com/v1/create-qr-code/"
+      );
+
+      url.searchParams.set("size", size + "x" + size);
+      url.searchParams.set("format", "png");
+      url.searchParams.set("qzone", "4");
+      url.searchParams.set("ecc", "M");
+      url.searchParams.set("data", value);
+
+      return url.href;
+    }
+
+    // ========================================
     // QR-КОД TELEGRAM
     // ========================================
 
-    document.getElementById("qr-section").hidden = false;
+    document.getElementById("telegram-qr-section").hidden = false;
 
-    const qrImage = document.getElementById("qr-image");
+    const telegramQrImage =
+      document.getElementById("telegram-qr-image");
 
-    qrImage.addEventListener("error", () => {
-      qrLink.hidden = true;
-      document.getElementById("qr-error").hidden = false;
+    telegramQrImage.addEventListener("error", () => {
+      telegramQrLink.hidden = true;
+      document.getElementById("telegram-qr-error").hidden = false;
     });
 
-    // Сервис получает ссылку Telegram,
-    // но не номер телефона и не почту.
-    qrImage.referrerPolicy = "no-referrer";
-    qrImage.src =
-      "https://api.qrserver.com/v1/create-qr-code/" +
-      "?size=240x240&margin=12&data=" +
-      encodeURIComponent(telegramUrl);
+    telegramQrImage.referrerPolicy = "no-referrer";
+    telegramQrImage.src = createQrUrl(telegramUrl);
+
+    // ========================================
+    // QR-КОД ВИЗИТКИ: ПОКАЗАТЬ / СКРЫТЬ
+    // ========================================
+
+    const toggleCardQrButton =
+      document.getElementById("toggle-card-qr");
+
+    const cardQrSection =
+      document.getElementById("card-qr-section");
+
+    const cardQrImage =
+      document.getElementById("card-qr-image");
+
+    const cardQrLink =
+      document.getElementById("card-qr-link");
+
+    let cardQrRequested = false;
+
+    toggleCardQrButton.hidden = false;
+
+    cardQrImage.referrerPolicy = "no-referrer";
+
+    cardQrImage.addEventListener("error", () => {
+      cardQrLink.hidden = true;
+      document.getElementById("card-qr-error").hidden = false;
+    });
+
+    toggleCardQrButton.addEventListener("click", () => {
+      const shouldOpen = cardQrSection.hidden;
+
+      cardQrSection.hidden = !shouldOpen;
+
+      toggleCardQrButton.setAttribute(
+        "aria-expanded",
+        String(shouldOpen)
+      );
+
+      toggleCardQrButton.textContent = shouldOpen
+        ? "Скрыть QR-код визитки"
+        : "QR-код визитки";
+
+      // Загружаем изображение только при первом открытии.
+      if (shouldOpen && !cardQrRequested) {
+        cardQrImage.src = createQrUrl(PROFILE.website);
+        cardQrRequested = true;
+      }
+    });
+
+    // ========================================
+    // ОБЩАЯ ФУНКЦИЯ СКАЧИВАНИЯ ФАЙЛА
+    // ========================================
+
+    function downloadBlob(blob, filename) {
+      const fileUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = fileUrl;
+      link.download = filename;
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setTimeout(() => {
+        URL.revokeObjectURL(fileUrl);
+      }, 60000);
+    }
+
+    // ========================================
+    // СКАЧАТЬ QR-КОД ВИЗИТКИ
+    // ========================================
+
+    const downloadQrButton =
+      document.getElementById("download-card-qr");
+
+    const downloadStatus =
+      document.getElementById("download-status");
+
+    const downloadFallback =
+      document.getElementById("download-fallback");
+
+    // Большое изображение для сохранения и печати.
+    const printableQrUrl = createQrUrl(PROFILE.website, 1000);
+
+    downloadFallback.href = printableQrUrl;
+
+    downloadQrButton.addEventListener("click", async () => {
+      downloadQrButton.disabled = true;
+      downloadQrButton.textContent = "Подготовка…";
+
+      downloadStatus.textContent = "";
+      downloadFallback.hidden = true;
+
+      try {
+        const response = await fetch(printableQrUrl, {
+          referrerPolicy: "no-referrer"
+        });
+
+        if (!response.ok) {
+          throw new Error("Не удалось загрузить QR-код");
+        }
+
+        const imageBlob = await response.blob();
+
+        if (!imageBlob.type.startsWith("image/")) {
+          throw new Error("Сервис вернул не изображение");
+        }
+
+        downloadBlob(imageBlob, "igor-vizitka-qr.png");
+
+        downloadStatus.textContent =
+          "QR-код передан браузеру для сохранения. Проверь загрузки.";
+      } catch (error) {
+        downloadStatus.textContent =
+          "Автоматическое скачивание не удалось. Открой картинку по ссылке ниже и сохрани её через меню браузера.";
+
+        downloadFallback.hidden = false;
+      } finally {
+        downloadQrButton.disabled = false;
+        downloadQrButton.textContent = "Скачать QR-код";
+      }
+    });
 
     // ========================================
     // СОХРАНЕНИЕ КОНТАКТА
@@ -740,8 +1001,8 @@
         "FN:" + escapeVCard(PROFILE.name),
         "TEL;TYPE=CELL:" + phoneForCall,
         "EMAIL;TYPE=INTERNET:" + escapeVCard(PROFILE.email.trim()),
-        "URL:" + telegramUrl,
-        "NOTE:" + escapeVCard("Telegram: @" + telegramUsername),
+        "URL:" + PROFILE.website,
+        "NOTE:" + escapeVCard("Telegram: " + telegramUrl),
         "END:VCARD",
         ""
       ].join("\r\n");
@@ -750,19 +1011,7 @@
         type: "text/vcard;charset=utf-8"
       });
 
-      const fileUrl = URL.createObjectURL(file);
-      const downloadLink = document.createElement("a");
-
-      downloadLink.href = fileUrl;
-      downloadLink.download = "igor-contact.vcf";
-
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      downloadLink.remove();
-
-      setTimeout(() => {
-        URL.revokeObjectURL(fileUrl);
-      }, 60000);
+      downloadBlob(file, "igor-contact.vcf");
     });
 
     // ========================================
@@ -776,16 +1025,6 @@
 
     shareButton.hidden = false;
 
-    // Используем адрес открытого сайта.
-    // Убираем параметры и якорь, сохраняя путь репозитория.
-    function getCardUrl() {
-      const url = new URL(window.location.href);
-      url.search = "";
-      url.hash = "";
-      return url.href;
-    }
-
-    // Выделяем ссылку при нажатии для ручного копирования.
     shareUrlInput.addEventListener("click", () => {
       shareUrlInput.select();
       shareUrlInput.setSelectionRange(
@@ -797,7 +1036,7 @@
     async function copyOrShowLink(url) {
       try {
         if (!window.isSecureContext || !navigator.clipboard) {
-          throw new Error("Автоматическое копирование недоступно");
+          throw new Error("Копирование недоступно");
         }
 
         await navigator.clipboard.writeText(url);
@@ -820,44 +1059,28 @@
     shareButton.addEventListener("click", async () => {
       shareStatus.textContent = "";
       manualShare.hidden = true;
-
-      // Локальный файл нельзя отправлять как публичную ссылку.
-      if (
-        window.location.protocol !== "https:" &&
-        window.location.protocol !== "http:"
-      ) {
-        shareStatus.textContent =
-          "Открой опубликованный сайт на GitHub Pages, чтобы поделиться ссылкой.";
-        return;
-      }
-
-      const url = getCardUrl();
+      shareButton.disabled = true;
 
       const shareData = {
         title: PROFILE.name + " — контакты",
         text: "Моя электронная визитка",
-        url: url
+        url: PROFILE.website
       };
-
-      shareButton.disabled = true;
 
       try {
         if (typeof navigator.share === "function") {
           try {
-            // Открываем системное меню отправки.
             await navigator.share(shareData);
             return;
           } catch (error) {
-            // Если пользователь закрыл меню, ничего не копируем.
+            // При закрытии меню ничего не копируем.
             if (error.name === "AbortError") {
               return;
             }
-
-            // При другой ошибке пробуем скопировать ссылку.
           }
         }
 
-        await copyOrShowLink(url);
+        await copyOrShowLink(PROFILE.website);
       } finally {
         shareButton.disabled = false;
       }
