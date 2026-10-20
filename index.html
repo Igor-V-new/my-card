@@ -8,7 +8,7 @@
   <title>Игорь — контакты</title>
 
   <style>
-    /* Фирменные цвета и светлая тема */
+    /* Светлая тема */
     :root {
       color-scheme: light;
 
@@ -16,46 +16,44 @@
       --mine-shaft: #262626;
       --quarter-white: #F6F2DE;
 
-      --page-background: #F6F2DE;
-      --card-background: rgba(246, 242, 222, 0.95);
+      --background: #F6F2DE;
+      --card: rgba(246, 242, 222, 0.95);
       --text: #262626;
       --muted: #555545;
       --border: rgba(38, 38, 38, 0.2);
       --surface: rgba(38, 38, 38, 0.06);
+      --shadow: 0 24px 70px rgba(38, 38, 38, 0.22);
 
-      --map-opacity: 0.36;
-      --background-overlay:
-        linear-gradient(
-          135deg,
-          rgba(48, 173, 0, 0.26) 0%,
-          rgba(246, 242, 222, 0.68) 48%,
-          rgba(38, 38, 38, 0.34) 100%
-        );
+      --map-opacity: 0.45;
 
-      --shadow: 0 24px 70px rgba(38, 38, 38, 0.2);
+      --overlay: linear-gradient(
+        135deg,
+        rgba(48, 173, 0, 0.30) 0%,
+        rgba(246, 242, 222, 0.55) 50%,
+        rgba(38, 38, 38, 0.40) 100%
+      );
     }
 
     /* Тёмная тема */
     :root[data-theme="dark"] {
       color-scheme: dark;
 
-      --page-background: #262626;
-      --card-background: rgba(38, 38, 38, 0.95);
+      --background: #262626;
+      --card: rgba(38, 38, 38, 0.95);
       --text: #F6F2DE;
       --muted: #ccc9b8;
       --border: rgba(246, 242, 222, 0.22);
       --surface: rgba(246, 242, 222, 0.07);
-
-      --map-opacity: 0.22;
-      --background-overlay:
-        linear-gradient(
-          135deg,
-          rgba(48, 173, 0, 0.25) 0%,
-          rgba(38, 38, 38, 0.65) 52%,
-          rgba(38, 38, 38, 0.9) 100%
-        );
-
       --shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+
+      --map-opacity: 0.28;
+
+      --overlay: linear-gradient(
+        135deg,
+        rgba(48, 173, 0, 0.25) 0%,
+        rgba(38, 38, 38, 0.55) 50%,
+        rgba(38, 38, 38, 0.85) 100%
+      );
     }
 
     * {
@@ -71,6 +69,7 @@
       min-height: 100vh;
       min-height: 100svh;
       padding: 32px 16px;
+
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -78,27 +77,28 @@
 
       font-family: Arial, sans-serif;
       color: var(--text);
-      background: var(--page-background);
+      background: var(--background);
       isolation: isolate;
     }
 
-    /* Неподвижный фон */
+    /* Фон с картой */
     .background {
       position: fixed;
       inset: 0;
       z-index: -1;
       overflow: hidden;
       pointer-events: none;
-      background: var(--page-background);
+      background: var(--background);
     }
 
     .background-map {
+      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       opacity: var(--map-opacity);
-      filter: grayscale(65%) blur(2px);
+      filter: grayscale(55%) blur(2px);
       transform: scale(1.03);
     }
 
@@ -106,21 +106,26 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: var(--background-overlay);
+      background: var(--overlay);
     }
 
+    /* Карточка */
     .card {
       width: 100%;
       max-width: 460px;
       margin-top: auto;
       padding: 28px;
+
       border: 1px solid var(--border);
       border-top: 5px solid var(--limeade);
       border-radius: 26px;
-      background: var(--card-background);
+
+      background: var(--card);
       box-shadow: var(--shadow);
+
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+
       text-align: center;
     }
 
@@ -130,25 +135,26 @@
       margin-bottom: 22px;
     }
 
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
     button {
       font: inherit;
       cursor: pointer;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
     }
 
     .theme-button {
       padding: 10px 14px;
       border: 1px solid var(--border);
       border-radius: 12px;
-      color: var(--text);
       background: var(--surface);
+      color: var(--text);
       font-size: 14px;
     }
 
+    /* Фотография */
     .avatar,
     .avatar-placeholder {
       width: 152px;
@@ -186,6 +192,7 @@
       background: var(--limeade);
     }
 
+    /* Контакты */
     .actions {
       display: grid;
       gap: 12px;
@@ -195,6 +202,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
       width: 100%;
       min-height: 50px;
       padding: 14px 16px;
@@ -244,6 +252,7 @@
       outline-offset: 4px;
     }
 
+    /* QR-код */
     .qr-section {
       margin-top: 26px;
       padding-top: 24px;
@@ -282,12 +291,13 @@
       line-height: 1.6;
     }
 
+    /* Источник карты */
     .map-credit {
       margin: 0 0 auto;
       padding: 8px 12px;
       border: 1px solid var(--border);
       border-radius: 10px;
-      background: var(--card-background);
+      background: var(--card);
       color: var(--text);
       font-size: 12px;
       text-align: center;
@@ -342,7 +352,12 @@
       </button>
     </div>
 
-    <img id="photo" class="avatar" alt="">
+    <img
+      id="photo"
+      class="avatar"
+      src="photo.jpg"
+      alt="Фото Игоря"
+    >
 
     <div
       id="photo-placeholder"
@@ -361,34 +376,54 @@
       <a
         id="telegram-link"
         class="button button-primary"
+        href="https://t.me/Igor_V25"
         target="_blank"
         rel="noopener noreferrer"
       >
         Написать в Telegram
       </a>
 
-      <a id="phone-link" class="button"></a>
+      <a
+        id="phone-link"
+        class="button"
+        href="tel:+79852521041"
+      >
+        +79852521041
+      </a>
 
-      <a id="email-link" class="button"></a>
+      <a
+        id="email-link"
+        class="button"
+        href="mailto:ig.volkov@2gis.ru"
+      >
+        ig.volkov@2gis.ru
+      </a>
 
       <button
         id="save-contact"
         class="button"
         type="button"
+        hidden
       >
         Сохранить контакт
       </button>
     </div>
 
-    <section class="qr-section" aria-labelledby="qr-title">
+    <section
+      id="qr-section"
+      class="qr-section"
+      aria-labelledby="qr-title"
+      hidden
+    >
       <h2 id="qr-title">Будем на связи</h2>
 
       <a
         id="qr-link"
         class="qr-link"
+        href="https://t.me/Igor_V25"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Открыть Telegram"
+        aria-label="Открыть Telegram @Igor_V25"
       >
         <img
           id="qr-image"
@@ -399,10 +434,13 @@
         >
       </a>
 
-      <p id="telegram-name" class="telegram-name"></p>
+      <p id="telegram-name" class="telegram-name">
+        @Igor_V25
+      </p>
 
       <p id="qr-error" class="hint" hidden>
-        QR-код не загрузился. Используй кнопку Telegram выше.
+        QR-код не загрузился.
+        Используй кнопку Telegram выше.
       </p>
 
       <p class="hint">
@@ -411,14 +449,11 @@
       </p>
 
       <p class="hint">
-        «Сохранить контакт» скачает карточку с номером и почтой.
-        Открой файл и подтверди добавление в контакты.
+        Чтобы добавить номер и почту в контакты,
+        нажми «Сохранить контакт», открой скачанный файл
+        и подтверди добавление.
       </p>
     </section>
-
-    <noscript>
-      <p>Для работы кнопок и загрузки данных включи JavaScript.</p>
-    </noscript>
   </main>
 
   <footer id="map-credit" class="map-credit" hidden>
@@ -427,26 +462,27 @@
       href="https://2gis.ru/moscow"
       target="_blank"
       rel="noopener noreferrer"
-    >2ГИС</a>
+    >
+      2ГИС
+    </a>
   </footer>
 
   <script>
     // ========================================
     // ТВОИ ДАННЫЕ
-    // Перенеси номер и почту из прежнего файла.
     // ========================================
 
     const PROFILE = {
       name: "Игорь",
-      phone: "ВСТАВЬ_СВОЙ_НОМЕР",
-      email: "ВСТАВЬ_СВОЮ_ПОЧТУ",
+      phone: "+79852521041",
+      email: "ig.volkov@2gis.ru",
       telegram: "Igor_V25",
       photo: "photo.jpg",
       map: "moscow-map.jpg"
     };
 
     // ========================================
-    // ДАННЫЕ НА СТРАНИЦЕ
+    // ЗАПОЛНЕНИЕ СТРАНИЦЫ
     // ========================================
 
     const telegramUsername = PROFILE.telegram.trim().replace(/^@/, "");
@@ -471,20 +507,40 @@
 
     const qrLink = document.getElementById("qr-link");
     qrLink.href = telegramUrl;
+    qrLink.setAttribute(
+      "aria-label",
+      "Открыть Telegram @" + telegramUsername
+    );
 
     // ========================================
     // ФОТОГРАФИЯ
     // ========================================
 
     const photo = document.getElementById("photo");
+    const photoPlaceholder =
+      document.getElementById("photo-placeholder");
+
     photo.alt = "Фото: " + PROFILE.name;
 
-    photo.addEventListener("error", () => {
+    function showPhotoPlaceholder() {
       photo.hidden = true;
-      document.getElementById("photo-placeholder").hidden = false;
+      photoPlaceholder.hidden = false;
+    }
+
+    photo.addEventListener("error", showPhotoPlaceholder);
+
+    photo.addEventListener("load", () => {
+      photo.hidden = false;
+      photoPlaceholder.hidden = true;
     });
 
     photo.src = PROFILE.photo;
+
+    // Проверка на случай, если изображение уже загрузилось
+    // или завершилось ошибкой до запуска скрипта.
+    if (photo.complete && photo.naturalWidth === 0) {
+      showPhotoPlaceholder();
+    }
 
     // ========================================
     // КАРТА НА ФОНЕ
@@ -494,6 +550,7 @@
     const mapCredit = document.getElementById("map-credit");
 
     mapImage.addEventListener("load", () => {
+      mapImage.hidden = false;
       mapCredit.hidden = false;
     });
 
@@ -503,25 +560,6 @@
     });
 
     mapImage.src = PROFILE.map;
-
-    // ========================================
-    // QR-КОД TELEGRAM
-    // ========================================
-
-    const qrImage = document.getElementById("qr-image");
-
-    qrImage.addEventListener("error", () => {
-      qrLink.hidden = true;
-      document.getElementById("qr-error").hidden = false;
-    });
-
-    // Внешнему сервису передаётся ссылка Telegram,
-    // но не номер телефона и не почта.
-    qrImage.referrerPolicy = "no-referrer";
-    qrImage.src =
-      "https://api.qrserver.com/v1/create-qr-code/" +
-      "?size=240x240&margin=12&data=" +
-      encodeURIComponent(telegramUrl);
 
     // ========================================
     // СВЕТЛАЯ И ТЁМНАЯ ТЕМА
@@ -538,7 +576,8 @@
     try {
       savedTheme = localStorage.getItem("card-theme");
     } catch (error) {
-      // Если сохранение запрещено, используем системную тему.
+      // Если хранение настроек запрещено,
+      // используем системную тему.
     }
 
     const initialTheme =
@@ -571,13 +610,39 @@
       try {
         localStorage.setItem("card-theme", newTheme);
       } catch (error) {
-        // Тема продолжит работать без сохранения настройки.
+        // Переключение работает и без сохранения настройки.
       }
     });
 
     // ========================================
+    // QR-КОД TELEGRAM
+    // ========================================
+
+    document.getElementById("qr-section").hidden = false;
+
+    const qrImage = document.getElementById("qr-image");
+
+    qrImage.addEventListener("error", () => {
+      qrLink.hidden = true;
+      document.getElementById("qr-error").hidden = false;
+    });
+
+    // Внешнему сервису передаётся ссылка Telegram.
+    // Номер телефона и почта ему не передаются.
+    qrImage.referrerPolicy = "no-referrer";
+    qrImage.src =
+      "https://api.qrserver.com/v1/create-qr-code/" +
+      "?size=240x240&margin=12&data=" +
+      encodeURIComponent(telegramUrl);
+
+    // ========================================
     // СОХРАНЕНИЕ КОНТАКТА
     // ========================================
+
+    const saveContactButton =
+      document.getElementById("save-contact");
+
+    saveContactButton.hidden = false;
 
     function escapeVCard(value) {
       return String(value)
@@ -587,7 +652,7 @@
         .replace(/,/g, "\\,");
     }
 
-    document.getElementById("save-contact").addEventListener("click", () => {
+    saveContactButton.addEventListener("click", () => {
       const vcard = [
         "BEGIN:VCARD",
         "VERSION:3.0",
@@ -606,14 +671,14 @@
       });
 
       const fileUrl = URL.createObjectURL(file);
-      const link = document.createElement("a");
+      const downloadLink = document.createElement("a");
 
-      link.href = fileUrl;
-      link.download = "igor-contact.vcf";
+      downloadLink.href = fileUrl;
+      downloadLink.download = "igor-contact.vcf";
 
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      downloadLink.remove();
 
       setTimeout(() => {
         URL.revokeObjectURL(fileUrl);
