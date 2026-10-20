@@ -5,10 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
 
-  <title>Игорь — контакты</title>
+  <title>Игорь Волков — контакты</title>
+
+  <meta
+    name="description"
+    content="Электронная визитка Игоря Волкова: телефон, Telegram, электронная почта и сохранение контакта."
+  >
+
+  <link
+    rel="canonical"
+    href="https://igor-v-new.github.io/my-card/"
+  >
+
+  <!-- Предпросмотр ссылки в поддерживающих его мессенджерах -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Игорь Волков — контакты">
+  <meta
+    property="og:description"
+    content="Телефон, Telegram, электронная почта и сохранение контакта."
+  >
+  <meta
+    property="og:url"
+    content="https://igor-v-new.github.io/my-card/"
+  >
+  <meta
+    property="og:image"
+    content="https://igor-v-new.github.io/my-card/photo.jpg"
+  >
+  <meta property="og:image:alt" content="Игорь Волков">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Игорь Волков — контакты">
+  <meta
+    name="twitter:description"
+    content="Телефон, Telegram, электронная почта и сохранение контакта."
+  >
+  <meta
+    name="twitter:image"
+    content="https://igor-v-new.github.io/my-card/photo.jpg"
+  >
+
+  <!-- Иконка вкладки без отдельного файла -->
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2330AD00'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial,sans-serif' font-size='27' font-weight='bold' fill='%23262626'%3E%D0%98%D0%92%3C/text%3E%3C/svg%3E"
+  >
+
+  <!-- Применяем тему до появления страницы -->
+  <script>
+    (() => {
+      let theme = null;
+
+      try {
+        theme = localStorage.getItem("card-theme");
+      } catch (error) {}
+
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
 
   <style>
-    /* Светлая тема */
     :root {
       color-scheme: light;
 
@@ -17,42 +81,39 @@
       --quarter-white: #F6F2DE;
 
       --background: #F6F2DE;
-      --card: rgba(246, 242, 222, 0.95);
+      --card: rgba(246, 242, 222, 0.96);
       --text: #262626;
       --muted: #555545;
       --border: rgba(38, 38, 38, 0.2);
       --surface: rgba(38, 38, 38, 0.06);
       --shadow: 0 24px 70px rgba(38, 38, 38, 0.22);
-
       --map-opacity: 0.45;
 
       --overlay: linear-gradient(
         135deg,
-        rgba(48, 173, 0, 0.30) 0%,
+        rgba(48, 173, 0, 0.30),
         rgba(246, 242, 222, 0.55) 50%,
-        rgba(38, 38, 38, 0.40) 100%
+        rgba(38, 38, 38, 0.40)
       );
     }
 
-    /* Тёмная тема */
     :root[data-theme="dark"] {
       color-scheme: dark;
 
       --background: #262626;
-      --card: rgba(38, 38, 38, 0.95);
+      --card: rgba(38, 38, 38, 0.96);
       --text: #F6F2DE;
       --muted: #ccc9b8;
       --border: rgba(246, 242, 222, 0.22);
       --surface: rgba(246, 242, 222, 0.07);
       --shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
-
       --map-opacity: 0.28;
 
       --overlay: linear-gradient(
         135deg,
-        rgba(48, 173, 0, 0.25) 0%,
+        rgba(48, 173, 0, 0.25),
         rgba(38, 38, 38, 0.55) 50%,
-        rgba(38, 38, 38, 0.85) 100%
+        rgba(38, 38, 38, 0.85)
       );
     }
 
@@ -69,19 +130,16 @@
       min-height: 100vh;
       min-height: 100svh;
       padding: 32px 16px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 18px;
-
       font-family: Arial, sans-serif;
       color: var(--text);
       background: var(--background);
       isolation: isolate;
     }
 
-    /* Фон с картой */
     .background {
       position: fixed;
       inset: 0;
@@ -96,7 +154,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
       opacity: var(--map-opacity);
       filter: grayscale(55%) blur(2px);
       transform: scale(1.03);
@@ -109,23 +166,18 @@
       background: var(--overlay);
     }
 
-    /* Карточка */
     .card {
       width: 100%;
       max-width: 460px;
       margin-top: auto;
       padding: 28px;
-
       border: 1px solid var(--border);
       border-top: 5px solid var(--limeade);
       border-radius: 26px;
-
       background: var(--card);
       box-shadow: var(--shadow);
-
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-
       text-align: center;
     }
 
@@ -135,17 +187,24 @@
       margin-bottom: 22px;
     }
 
-    button {
+    button,
+    input {
       font: inherit;
+    }
+
+    button,
+    summary {
       cursor: pointer;
     }
 
     button,
-    a {
+    a,
+    summary {
       -webkit-tap-highlight-color: transparent;
     }
 
     .theme-button {
+      min-height: 44px;
       padding: 10px 14px;
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -154,7 +213,6 @@
       font-size: 14px;
     }
 
-    /* Фотография */
     .avatar,
     .avatar-placeholder {
       width: 152px;
@@ -174,12 +232,14 @@
       display: grid;
       place-items: center;
       background: var(--surface);
-      font-size: 60px;
+      color: var(--text);
+      font-size: 44px;
+      font-weight: bold;
     }
 
     h1 {
       margin: 0;
-      font-size: 34px;
+      font-size: clamp(27px, 7vw, 34px);
       line-height: 1.2;
       overflow-wrap: anywhere;
     }
@@ -192,7 +252,6 @@
       background: var(--limeade);
     }
 
-    /* Кнопки */
     .actions {
       display: grid;
       gap: 12px;
@@ -200,26 +259,21 @@
 
     .button {
       display: flex;
-      justify-content: center;
       align-items: center;
-
+      justify-content: center;
       width: 100%;
       min-height: 50px;
       padding: 14px 16px;
-
       border: 1px solid var(--border);
       border-radius: 14px;
-
       background: var(--surface);
       color: var(--text);
-
       font: inherit;
       font-weight: bold;
       line-height: 1.4;
       text-align: center;
       text-decoration: none;
       overflow-wrap: anywhere;
-
       transition:
         transform 0.15s ease,
         background-color 0.15s ease;
@@ -236,33 +290,26 @@
     }
 
     .button:disabled {
-      cursor: wait;
       opacity: 0.7;
+      cursor: wait;
     }
 
-    @media (hover: hover) {
-      .button:not(:disabled):hover {
-        transform: translateY(-2px);
-        background: var(--border);
-      }
-
-      .button-primary:not(:disabled):hover {
-        background: #3bc20a;
-      }
-
-      .theme-button:hover {
-        background: var(--border);
-      }
+    .more {
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
     }
 
-    a:focus-visible,
-    button:focus-visible,
-    input:focus-visible {
-      outline: 3px solid var(--limeade);
-      outline-offset: 4px;
+    .more > summary {
+      padding: 18px 4px;
+      color: var(--text);
+      font-weight: bold;
+      line-height: 1.5;
     }
 
-    /* Сообщения */
+    .more[open] > summary {
+      margin-bottom: 4px;
+    }
+
     .status,
     .hint {
       color: var(--muted);
@@ -295,7 +342,6 @@
       margin-bottom: 10px;
       font-size: 13px;
       line-height: 1.6;
-      color: var(--muted);
     }
 
     .share-url {
@@ -306,13 +352,11 @@
       border-radius: 8px;
       background: var(--card);
       color: var(--text);
-      font: inherit;
       font-size: 14px;
     }
 
-    /* QR-коды */
     .qr-section {
-      margin-top: 26px;
+      margin-top: 24px;
       padding-top: 24px;
       border-top: 1px solid var(--border);
     }
@@ -327,7 +371,7 @@
       max-width: 100%;
       padding: 12px;
       border-radius: 16px;
-      background: #ffffff;
+      background: white;
     }
 
     .qr-image {
@@ -337,12 +381,15 @@
       height: auto;
     }
 
-    .telegram-name {
-      margin: 12px 0 0;
-      font-weight: bold;
+    .qr-download {
+      margin-top: 16px;
     }
 
-    .site-link {
+    .qr-status {
+      margin-top: 12px;
+    }
+
+    .text-link {
       display: inline-block;
       margin-top: 12px;
       color: var(--text);
@@ -352,24 +399,6 @@
       overflow-wrap: anywhere;
     }
 
-    .qr-download {
-      margin-top: 16px;
-    }
-
-    .download-status {
-      margin-top: 12px;
-    }
-
-    .fallback-link {
-      display: inline-block;
-      margin-top: 12px;
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.6;
-      text-underline-offset: 3px;
-    }
-
-    /* Источник карты */
     .map-credit {
       margin: 0 0 auto;
       padding: 8px 12px;
@@ -386,6 +415,29 @@
       text-underline-offset: 3px;
     }
 
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--limeade);
+      outline-offset: 4px;
+    }
+
+    @media (hover: hover) {
+      .button:not(:disabled):hover {
+        transform: translateY(-2px);
+        background: var(--border);
+      }
+
+      .button-primary:not(:disabled):hover {
+        background: #3bc20a;
+      }
+
+      .theme-button:hover {
+        background: var(--border);
+      }
+    }
+
     @media (max-width: 380px) {
       body {
         padding: 16px 12px;
@@ -393,10 +445,6 @@
 
       .card {
         padding: 22px 18px;
-      }
-
-      h1 {
-        font-size: 29px;
       }
     }
 
@@ -410,11 +458,7 @@
 
 <body>
   <div class="background" aria-hidden="true">
-    <img
-      id="background-map"
-      class="background-map"
-      alt=""
-    >
+    <img id="background-map" class="background-map" alt="">
   </div>
 
   <main class="card">
@@ -434,7 +478,11 @@
       id="photo"
       class="avatar"
       src="photo.jpg"
-      alt="Фото Игоря"
+      width="152"
+      height="152"
+      fetchpriority="high"
+      decoding="async"
+      alt="Игорь Волков"
     >
 
     <div
@@ -443,16 +491,15 @@
       aria-hidden="true"
       hidden
     >
-      👤
+      ИВ
     </div>
 
-    <h1 id="name">Игорь</h1>
+    <h1>Игорь Волков</h1>
 
     <div class="accent-line" aria-hidden="true"></div>
 
     <div class="actions">
       <a
-        id="telegram-link"
         class="button button-primary"
         href="https://t.me/Igor_V25"
         target="_blank"
@@ -461,20 +508,8 @@
         Написать в Telegram
       </a>
 
-      <a
-        id="phone-link"
-        class="button"
-        href="tel:+79852521041"
-      >
-        +79852521041
-      </a>
-
-      <a
-        id="email-link"
-        class="button"
-        href="mailto:ig.volkov@2gis.ru"
-      >
-        ig.volkov@2gis.ru
+      <a class="button" href="tel:+79852521041">
+        Позвонить: +79852521041
       </a>
 
       <button
@@ -485,172 +520,198 @@
       >
         Сохранить контакт
       </button>
-
-      <button
-        id="share-button"
-        class="button button-share"
-        type="button"
-        aria-describedby="share-status"
-        hidden
-      >
-        Поделиться визиткой
-      </button>
-
-      <p
-        id="share-status"
-        class="status"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      ></p>
-
-      <div id="manual-share" class="manual-share" hidden>
-        <label for="share-url">
-          Скопируй ссылку вручную и отправь её:
-        </label>
-
-        <input
-          id="share-url"
-          class="share-url"
-          type="url"
-          readonly
-          spellcheck="false"
-        >
-      </div>
-
-      <button
-        id="toggle-card-qr"
-        class="button"
-        type="button"
-        aria-expanded="false"
-        aria-controls="card-qr-section"
-        hidden
-      >
-        QR-код визитки
-      </button>
     </div>
 
-    <!-- Новый QR-код: открывает сайт-визитку -->
-    <section
-      id="card-qr-section"
-      class="qr-section"
-      aria-labelledby="card-qr-title"
-      hidden
-    >
-      <h2 id="card-qr-title">Моя электронная визитка</h2>
+    <p id="contact-hint" class="hint" hidden>
+      Открой скачанный файл и подтверди добавление в контакты.
+    </p>
 
-      <a
-        id="card-qr-link"
-        class="qr-link"
-        href="https://igor-v-new.github.io/my-card/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Открыть сайт-визитку Игоря"
-      >
-        <img
-          id="card-qr-image"
-          class="qr-image"
-          width="184"
-          height="184"
-          alt="QR-код со ссылкой на сайт-визитку Игоря"
+    <details id="more" class="more">
+      <summary>Ещё способы связи</summary>
+
+      <div class="actions">
+        <a class="button" href="mailto:ig.volkov@2gis.ru">
+          ig.volkov@2gis.ru
+        </a>
+
+        <button
+          id="share-button"
+          class="button button-share"
+          type="button"
+          hidden
         >
-      </a>
+          Поделиться визиткой
+        </button>
 
-      <p id="card-qr-error" class="hint" hidden>
-        QR-код не загрузился. Ссылка на сайт доступна ниже.
-      </p>
+        <p
+          id="share-status"
+          class="status"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
 
-      <div>
+        <div id="manual-share" class="manual-share" hidden>
+          <label for="share-url">
+            Скопируй ссылку и отправь её:
+          </label>
+          <input
+            id="share-url"
+            class="share-url"
+            type="url"
+            readonly
+            spellcheck="false"
+          >
+        </div>
+
+        <button
+          id="toggle-card-qr"
+          class="button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="card-qr-section"
+          hidden
+        >
+          QR-код визитки
+        </button>
+      </div>
+
+      <section
+        id="card-qr-section"
+        class="qr-section"
+        aria-labelledby="card-qr-title"
+        hidden
+      >
+        <h2 id="card-qr-title">Моя электронная визитка</h2>
+
         <a
-          id="card-site-link"
-          class="site-link"
+          id="card-qr-link"
+          class="qr-link"
           href="https://igor-v-new.github.io/my-card/"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Открыть сайт-визитку Игоря Волкова"
         >
-          igor-v-new.github.io/my-card/
+          <img
+            id="card-qr-image"
+            class="qr-image"
+            width="184"
+            height="184"
+            alt="QR-код сайта-визитки"
+          >
         </a>
-      </div>
 
-      <p class="hint">
-        Этот QR-код открывает сайт со всеми моими контактами.
-        Сохрани его для презентации или печати.
-      </p>
+        <p id="card-qr-error" class="hint" hidden>
+          QR-код не загрузился. Используй ссылку ниже.
+        </p>
 
-      <button
-        id="download-card-qr"
-        class="button button-primary qr-download"
-        type="button"
-      >
-        Скачать QR-код
-      </button>
+        <div>
+          <a
+            class="text-link"
+            href="https://igor-v-new.github.io/my-card/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            igor-v-new.github.io/my-card/
+          </a>
+        </div>
 
-      <p
-        id="download-status"
-        class="status download-status"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      ></p>
+        <p class="hint">
+          Этот код открывает сайт со всеми контактами.
+        </p>
 
-      <a
-        id="download-fallback"
-        class="fallback-link"
-        target="_blank"
-        rel="noopener noreferrer"
-        referrerpolicy="no-referrer"
+        <button
+          id="download-card-qr"
+          class="button button-primary qr-download"
+          type="button"
+        >
+          Скачать QR-код визитки
+        </button>
+
+        <p
+          id="card-download-status"
+          class="status qr-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <a
+          id="card-download-fallback"
+          class="text-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          referrerpolicy="no-referrer"
+          hidden
+        >
+          Открыть картинку для сохранения
+        </a>
+      </section>
+
+      <section
+        id="telegram-qr-section"
+        class="qr-section"
+        aria-labelledby="telegram-qr-title"
         hidden
       >
-        Открыть картинку для сохранения
-      </a>
-    </section>
+        <h2 id="telegram-qr-title">Telegram</h2>
 
-    <!-- Прежний QR-код: открывает Telegram -->
-    <section
-      id="telegram-qr-section"
-      class="qr-section"
-      aria-labelledby="telegram-qr-title"
-      hidden
-    >
-      <h2 id="telegram-qr-title">Будем на связи</h2>
-
-      <a
-        id="telegram-qr-link"
-        class="qr-link"
-        href="https://t.me/Igor_V25"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Открыть Telegram @Igor_V25"
-      >
-        <img
-          id="telegram-qr-image"
-          class="qr-image"
-          width="184"
-          height="184"
-          alt="QR-код для перехода в Telegram"
+        <a
+          id="telegram-qr-link"
+          class="qr-link"
+          href="https://t.me/Igor_V25"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Открыть Telegram @Igor_V25"
         >
-      </a>
+          <img
+            id="telegram-qr-image"
+            class="qr-image"
+            width="184"
+            height="184"
+            alt="QR-код Telegram"
+          >
+        </a>
 
-      <p id="telegram-name" class="telegram-name">
-        @Igor_V25
-      </p>
+        <p class="hint">@Igor_V25</p>
 
-      <p id="telegram-qr-error" class="hint" hidden>
-        QR-код не загрузился.
-        Используй кнопку Telegram выше.
-      </p>
+        <p id="telegram-qr-error" class="hint" hidden>
+          QR-код не загрузился. Используй кнопку Telegram.
+        </p>
 
+        <button
+          id="download-telegram-qr"
+          class="button qr-download"
+          type="button"
+        >
+          Скачать QR-код Telegram
+        </button>
+
+        <p
+          id="telegram-download-status"
+          class="status qr-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <a
+          id="telegram-download-fallback"
+          class="text-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          referrerpolicy="no-referrer"
+          hidden
+        >
+          Открыть картинку для сохранения
+        </a>
+      </section>
+    </details>
+
+    <noscript>
       <p class="hint">
-        Отсканируй QR-код камерой телефона
-        или нажми на него.
+        Для переключения темы, QR-кодов и сохранения контакта
+        включи JavaScript. Обычные ссылки работают без него.
       </p>
-
-      <p class="hint">
-        Чтобы добавить номер и почту в контакты,
-        нажми «Сохранить контакт», открой скачанный файл
-        и подтверди добавление.
-      </p>
-    </section>
+    </noscript>
   </main>
 
   <footer id="map-credit" class="map-credit" hidden>
@@ -659,103 +720,55 @@
       href="https://2gis.ru/moscow"
       target="_blank"
       rel="noopener noreferrer"
-    >
-      2ГИС
-    </a>
+    >2ГИС</a>
   </footer>
 
   <script>
-    // ========================================
-    // ТВОИ ДАННЫЕ
-    // ========================================
+    // =====================================
+    // ДАННЫЕ
+    // =====================================
 
     const PROFILE = {
-      name: "Игорь",
+      name: "Игорь Волков",
       phone: "+79852521041",
       email: "ig.volkov@2gis.ru",
       telegram: "Igor_V25",
-      photo: "photo.jpg",
-      map: "moscow-map.jpg",
       website: "https://igor-v-new.github.io/my-card/"
     };
 
-    const telegramUsername = PROFILE.telegram.trim().replace(/^@/, "");
-    const telegramUrl = "https://t.me/" + telegramUsername;
-    const phoneForCall = PROFILE.phone.replace(/[^\d+]/g, "");
+    const telegramUrl = "https://t.me/" + PROFILE.telegram;
 
-    // ========================================
-    // ЗАПОЛНЕНИЕ СТРАНИЦЫ
-    // ========================================
-
-    document.title = PROFILE.name + " — контакты";
-    document.getElementById("name").textContent = PROFILE.name;
-
-    const phoneLink = document.getElementById("phone-link");
-    phoneLink.textContent = PROFILE.phone;
-    phoneLink.href = "tel:" + phoneForCall;
-
-    const emailLink = document.getElementById("email-link");
-    emailLink.textContent = PROFILE.email;
-    emailLink.href = "mailto:" + PROFILE.email.trim();
-
-    document.getElementById("telegram-link").href = telegramUrl;
-
-    document.getElementById("telegram-name").textContent =
-      "@" + telegramUsername;
-
-    const telegramQrLink =
-      document.getElementById("telegram-qr-link");
-
-    telegramQrLink.href = telegramUrl;
-    telegramQrLink.setAttribute(
-      "aria-label",
-      "Открыть Telegram @" + telegramUsername
-    );
-
-    document.getElementById("card-qr-link").href = PROFILE.website;
-
-    const cardSiteLink = document.getElementById("card-site-link");
-    cardSiteLink.href = PROFILE.website;
-    cardSiteLink.textContent =
-      PROFILE.website.replace(/^https?:\/\//, "");
-
-    // ========================================
+    // =====================================
     // ФОТОГРАФИЯ
-    // ========================================
+    // =====================================
 
     const photo = document.getElementById("photo");
     const photoPlaceholder =
       document.getElementById("photo-placeholder");
 
-    photo.alt = "Фото: " + PROFILE.name;
-
-    function showPhotoPlaceholder() {
-      photo.hidden = true;
-      photoPlaceholder.hidden = false;
+    function updatePhoto() {
+      const failed = photo.complete && photo.naturalWidth === 0;
+      photo.hidden = failed;
+      photoPlaceholder.hidden = !failed;
     }
 
-    photo.addEventListener("error", showPhotoPlaceholder);
+    photo.addEventListener("load", updatePhoto);
+    photo.addEventListener("error", updatePhoto);
 
-    photo.addEventListener("load", () => {
-      photo.hidden = false;
-      photoPlaceholder.hidden = true;
-    });
-
-    photo.src = PROFILE.photo;
-
-    if (photo.complete && photo.naturalWidth === 0) {
-      showPhotoPlaceholder();
+    if (photo.complete) {
+      updatePhoto();
     }
 
-    // ========================================
-    // КАРТА НА ФОНЕ
-    // ========================================
+    // =====================================
+    // КАРТА
+    // =====================================
 
     const mapImage = document.getElementById("background-map");
     const mapCredit = document.getElementById("map-credit");
 
+    mapImage.decoding = "async";
+
     mapImage.addEventListener("load", () => {
-      mapImage.hidden = false;
       mapCredit.hidden = false;
     });
 
@@ -764,36 +777,18 @@
       mapCredit.hidden = true;
     });
 
-    mapImage.src = PROFILE.map;
+    mapImage.src = "moscow-map.jpg";
 
-    // ========================================
-    // СВЕТЛАЯ И ТЁМНАЯ ТЕМА
-    // ========================================
+    // =====================================
+    // ТЕМА
+    // =====================================
 
     const themeButton = document.getElementById("theme-button");
-
-    const systemTheme = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
-
-    let savedTheme = null;
-
-    try {
-      savedTheme = localStorage.getItem("card-theme");
-    } catch (error) {
-      // Используем системную тему.
-    }
-
-    const initialTheme =
-      savedTheme === "dark" || savedTheme === "light"
-        ? savedTheme
-        : (systemTheme.matches ? "dark" : "light");
 
     function applyTheme(theme) {
       const isDark = theme === "dark";
 
       document.documentElement.dataset.theme = theme;
-
       themeButton.textContent = isDark
         ? "☀️ Светлая тема"
         : "🌙 Тёмная тема";
@@ -801,189 +796,42 @@
       themeButton.setAttribute("aria-pressed", String(isDark));
     }
 
-    applyTheme(initialTheme);
+    applyTheme(document.documentElement.dataset.theme || "light");
 
     themeButton.addEventListener("click", () => {
-      const newTheme =
+      const theme =
         document.documentElement.dataset.theme === "dark"
           ? "light"
           : "dark";
 
-      applyTheme(newTheme);
+      applyTheme(theme);
 
       try {
-        localStorage.setItem("card-theme", newTheme);
-      } catch (error) {
-        // Переключение работает без сохранения настройки.
-      }
+        localStorage.setItem("card-theme", theme);
+      } catch (error) {}
     });
 
-    // ========================================
-    // ОБЩАЯ ФУНКЦИЯ ДЛЯ QR-КОДОВ
-    // ========================================
-
-    function createQrUrl(value, size = 300) {
-      const url = new URL(
-        "https://api.qrserver.com/v1/create-qr-code/"
-      );
-
-      url.searchParams.set("size", size + "x" + size);
-      url.searchParams.set("format", "png");
-      url.searchParams.set("qzone", "4");
-      url.searchParams.set("ecc", "M");
-      url.searchParams.set("data", value);
-
-      return url.href;
-    }
-
-    // ========================================
-    // QR-КОД TELEGRAM
-    // ========================================
-
-    document.getElementById("telegram-qr-section").hidden = false;
-
-    const telegramQrImage =
-      document.getElementById("telegram-qr-image");
-
-    telegramQrImage.addEventListener("error", () => {
-      telegramQrLink.hidden = true;
-      document.getElementById("telegram-qr-error").hidden = false;
-    });
-
-    telegramQrImage.referrerPolicy = "no-referrer";
-    telegramQrImage.src = createQrUrl(telegramUrl);
-
-    // ========================================
-    // QR-КОД ВИЗИТКИ: ПОКАЗАТЬ / СКРЫТЬ
-    // ========================================
-
-    const toggleCardQrButton =
-      document.getElementById("toggle-card-qr");
-
-    const cardQrSection =
-      document.getElementById("card-qr-section");
-
-    const cardQrImage =
-      document.getElementById("card-qr-image");
-
-    const cardQrLink =
-      document.getElementById("card-qr-link");
-
-    let cardQrRequested = false;
-
-    toggleCardQrButton.hidden = false;
-
-    cardQrImage.referrerPolicy = "no-referrer";
-
-    cardQrImage.addEventListener("error", () => {
-      cardQrLink.hidden = true;
-      document.getElementById("card-qr-error").hidden = false;
-    });
-
-    toggleCardQrButton.addEventListener("click", () => {
-      const shouldOpen = cardQrSection.hidden;
-
-      cardQrSection.hidden = !shouldOpen;
-
-      toggleCardQrButton.setAttribute(
-        "aria-expanded",
-        String(shouldOpen)
-      );
-
-      toggleCardQrButton.textContent = shouldOpen
-        ? "Скрыть QR-код визитки"
-        : "QR-код визитки";
-
-      // Загружаем изображение только при первом открытии.
-      if (shouldOpen && !cardQrRequested) {
-        cardQrImage.src = createQrUrl(PROFILE.website);
-        cardQrRequested = true;
-      }
-    });
-
-    // ========================================
-    // ОБЩАЯ ФУНКЦИЯ СКАЧИВАНИЯ ФАЙЛА
-    // ========================================
+    // =====================================
+    // СКАЧИВАНИЕ ФАЙЛОВ
+    // =====================================
 
     function downloadBlob(blob, filename) {
-      const fileUrl = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
 
-      link.href = fileUrl;
+      link.href = url;
       link.download = filename;
 
       document.body.appendChild(link);
       link.click();
       link.remove();
 
-      setTimeout(() => {
-        URL.revokeObjectURL(fileUrl);
-      }, 60000);
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
     }
 
-    // ========================================
-    // СКАЧАТЬ QR-КОД ВИЗИТКИ
-    // ========================================
-
-    const downloadQrButton =
-      document.getElementById("download-card-qr");
-
-    const downloadStatus =
-      document.getElementById("download-status");
-
-    const downloadFallback =
-      document.getElementById("download-fallback");
-
-    // Большое изображение для сохранения и печати.
-    const printableQrUrl = createQrUrl(PROFILE.website, 1000);
-
-    downloadFallback.href = printableQrUrl;
-
-    downloadQrButton.addEventListener("click", async () => {
-      downloadQrButton.disabled = true;
-      downloadQrButton.textContent = "Подготовка…";
-
-      downloadStatus.textContent = "";
-      downloadFallback.hidden = true;
-
-      try {
-        const response = await fetch(printableQrUrl, {
-          referrerPolicy: "no-referrer"
-        });
-
-        if (!response.ok) {
-          throw new Error("Не удалось загрузить QR-код");
-        }
-
-        const imageBlob = await response.blob();
-
-        if (!imageBlob.type.startsWith("image/")) {
-          throw new Error("Сервис вернул не изображение");
-        }
-
-        downloadBlob(imageBlob, "igor-vizitka-qr.png");
-
-        downloadStatus.textContent =
-          "QR-код передан браузеру для сохранения. Проверь загрузки.";
-      } catch (error) {
-        downloadStatus.textContent =
-          "Автоматическое скачивание не удалось. Открой картинку по ссылке ниже и сохрани её через меню браузера.";
-
-        downloadFallback.hidden = false;
-      } finally {
-        downloadQrButton.disabled = false;
-        downloadQrButton.textContent = "Скачать QR-код";
-      }
-    });
-
-    // ========================================
-    // СОХРАНЕНИЕ КОНТАКТА
-    // ========================================
-
-    const saveContactButton =
-      document.getElementById("save-contact");
-
-    saveContactButton.hidden = false;
+    // =====================================
+    // КАРТОЧКА КОНТАКТА
+    // =====================================
 
     function escapeVCard(value) {
       return String(value)
@@ -993,66 +841,67 @@
         .replace(/,/g, "\\,");
     }
 
-    saveContactButton.addEventListener("click", () => {
+    const saveContact = document.getElementById("save-contact");
+    saveContact.hidden = false;
+    document.getElementById("contact-hint").hidden = false;
+
+    saveContact.addEventListener("click", () => {
       const vcard = [
         "BEGIN:VCARD",
         "VERSION:3.0",
-        "N:;" + escapeVCard(PROFILE.name) + ";;;",
+        "N:Волков;Игорь;;;",
         "FN:" + escapeVCard(PROFILE.name),
-        "TEL;TYPE=CELL:" + phoneForCall,
-        "EMAIL;TYPE=INTERNET:" + escapeVCard(PROFILE.email.trim()),
+        "TEL;TYPE=CELL:" + PROFILE.phone,
+        "EMAIL;TYPE=INTERNET:" + escapeVCard(PROFILE.email),
         "URL:" + PROFILE.website,
         "NOTE:" + escapeVCard("Telegram: " + telegramUrl),
         "END:VCARD",
         ""
       ].join("\r\n");
 
-      const file = new Blob([vcard], {
-        type: "text/vcard;charset=utf-8"
-      });
-
-      downloadBlob(file, "igor-contact.vcf");
+      downloadBlob(
+        new Blob([vcard], {
+          type: "text/vcard;charset=utf-8"
+        }),
+        "igor-volkov-contact.vcf"
+      );
     });
 
-    // ========================================
-    // ПОДЕЛИТЬСЯ ВИЗИТКОЙ
-    // ========================================
+    // =====================================
+    // ПОДЕЛИТЬСЯ
+    // =====================================
 
     const shareButton = document.getElementById("share-button");
     const shareStatus = document.getElementById("share-status");
     const manualShare = document.getElementById("manual-share");
-    const shareUrlInput = document.getElementById("share-url");
+    const shareInput = document.getElementById("share-url");
 
     shareButton.hidden = false;
+    shareInput.value = PROFILE.website;
 
-    shareUrlInput.addEventListener("click", () => {
-      shareUrlInput.select();
-      shareUrlInput.setSelectionRange(
-        0,
-        shareUrlInput.value.length
-      );
-    });
+    function selectShareLink() {
+      shareInput.select();
+      shareInput.setSelectionRange(0, shareInput.value.length);
+    }
 
-    async function copyOrShowLink(url) {
+    shareInput.addEventListener("click", selectShareLink);
+
+    async function copyOrShowLink() {
       try {
         if (!window.isSecureContext || !navigator.clipboard) {
           throw new Error("Копирование недоступно");
         }
 
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(PROFILE.website);
 
         shareStatus.textContent =
-          "Ссылка скопирована! Теперь её можно вставить в сообщение.";
+          "Ссылка скопирована! Вставь её в сообщение.";
       } catch (error) {
-        shareUrlInput.value = url;
         manualShare.hidden = false;
-
         shareStatus.textContent =
-          "Браузер не разрешил автоматическое копирование.";
-
-        shareUrlInput.focus();
-        shareUrlInput.select();
-        shareUrlInput.setSelectionRange(0, url.length);
+          "Скопируй ссылку вручную.";
+        shareInput.focus();
+        selectShareLink();
       }
     }
 
@@ -1061,28 +910,207 @@
       manualShare.hidden = true;
       shareButton.disabled = true;
 
-      const shareData = {
-        title: PROFILE.name + " — контакты",
-        text: "Моя электронная визитка",
-        url: PROFILE.website
-      };
-
       try {
         if (typeof navigator.share === "function") {
           try {
-            await navigator.share(shareData);
+            await navigator.share({
+              title: PROFILE.name + " — контакты",
+              text: "Моя электронная визитка",
+              url: PROFILE.website
+            });
             return;
           } catch (error) {
-            // При закрытии меню ничего не копируем.
             if (error.name === "AbortError") {
               return;
             }
           }
         }
 
-        await copyOrShowLink(PROFILE.website);
+        await copyOrShowLink();
       } finally {
         shareButton.disabled = false;
+      }
+    });
+
+    // =====================================
+    // QR-КОДЫ
+    //
+    // Сначала используем локальные картинки.
+    // Если их нет — внешний сервис.
+    // =====================================
+
+    function remoteQrUrl(value) {
+      const url = new URL(
+        "https://api.qrserver.com/v1/create-qr-code/"
+      );
+
+      url.searchParams.set("size", "1000x1000");
+      url.searchParams.set("format", "png");
+      url.searchParams.set("qzone", "4");
+      url.searchParams.set("ecc", "M");
+      url.searchParams.set("data", value);
+
+      return url.href;
+    }
+
+    function configureQr({
+      imageId,
+      linkId,
+      errorId,
+      localFile,
+      value,
+      buttonId,
+      statusId,
+      fallbackId
+    }) {
+      const image = document.getElementById(imageId);
+      const link = document.getElementById(linkId);
+      const errorText = document.getElementById(errorId);
+      const button = document.getElementById(buttonId);
+      const status = document.getElementById(statusId);
+      const fallback = document.getElementById(fallbackId);
+
+      let requested = false;
+      let usingRemote = false;
+      let source = localFile;
+
+      image.referrerPolicy = "no-referrer";
+
+      image.addEventListener("error", () => {
+        if (!usingRemote) {
+          usingRemote = true;
+          source = remoteQrUrl(value);
+          image.src = source;
+        } else {
+          link.hidden = true;
+          errorText.hidden = false;
+        }
+      });
+
+      image.addEventListener("load", () => {
+        link.hidden = false;
+        errorText.hidden = true;
+      });
+
+      function load() {
+        if (requested) return;
+        requested = true;
+        image.src = source;
+      }
+
+      button.addEventListener("click", async () => {
+        const originalText = button.textContent;
+
+        button.disabled = true;
+        button.textContent = "Подготовка…";
+        status.textContent = "";
+        fallback.hidden = true;
+
+        try {
+          // Локальный файл предпочтительнее внешнего сервиса.
+          let response;
+
+          try {
+            response = await fetch(localFile, {
+              referrerPolicy: "no-referrer"
+            });
+
+            if (!response.ok) {
+              throw new Error("Локальный QR-код не найден");
+            }
+
+            const contentType =
+              response.headers.get("content-type") || "";
+
+            if (!contentType.startsWith("image/")) {
+              throw new Error("Файл не является изображением");
+            }
+          } catch (error) {
+            response = await fetch(remoteQrUrl(value), {
+              referrerPolicy: "no-referrer"
+            });
+          }
+
+          if (!response.ok) {
+            throw new Error("Ошибка загрузки QR-кода");
+          }
+
+          const blob = await response.blob();
+
+          if (!blob.type.startsWith("image/")) {
+            throw new Error("Получен не файл изображения");
+          }
+
+          downloadBlob(blob, localFile);
+
+          status.textContent =
+            "Файл передан браузеру для сохранения. Проверь загрузки.";
+        } catch (error) {
+          status.textContent =
+            "Не удалось скачать автоматически. Открой картинку по ссылке ниже и сохрани через меню браузера.";
+
+          fallback.href = usingRemote
+            ? remoteQrUrl(value)
+            : source;
+
+          fallback.hidden = false;
+        } finally {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      });
+
+      return { load };
+    }
+
+    const cardQr = configureQr({
+      imageId: "card-qr-image",
+      linkId: "card-qr-link",
+      errorId: "card-qr-error",
+      localFile: "qr-card.png",
+      value: PROFILE.website,
+      buttonId: "download-card-qr",
+      statusId: "card-download-status",
+      fallbackId: "card-download-fallback"
+    });
+
+    const telegramQr = configureQr({
+      imageId: "telegram-qr-image",
+      linkId: "telegram-qr-link",
+      errorId: "telegram-qr-error",
+      localFile: "qr-telegram.png",
+      value: telegramUrl,
+      buttonId: "download-telegram-qr",
+      statusId: "telegram-download-status",
+      fallbackId: "telegram-download-fallback"
+    });
+
+    // Telegram QR загружается только при раскрытии раздела.
+    const more = document.getElementById("more");
+
+    more.addEventListener("toggle", () => {
+      if (more.open) {
+        document.getElementById("telegram-qr-section").hidden = false;
+        telegramQr.load();
+      }
+    });
+
+    const toggleQr = document.getElementById("toggle-card-qr");
+    const cardQrSection = document.getElementById("card-qr-section");
+
+    toggleQr.hidden = false;
+
+    toggleQr.addEventListener("click", () => {
+      const open = cardQrSection.hidden;
+
+      cardQrSection.hidden = !open;
+      toggleQr.setAttribute("aria-expanded", String(open));
+      toggleQr.textContent = open
+        ? "Скрыть QR-код визитки"
+        : "QR-код визитки";
+
+      if (open) {
+        cardQr.load();
       }
     });
   </script>
